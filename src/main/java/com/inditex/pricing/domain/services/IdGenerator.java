@@ -5,7 +5,7 @@ import com.inditex.pricing.domain.exceptions.IdGenerationException;
 public interface IdGenerator<T> {
     T generate();
 
-    default T generateOrThrow() {
+    default T generateOrThrow() throws IdGenerationException {
         T id = generate();
         if (id == null || (id instanceof Number num && num.longValue() <= 0)) {
             throw new IdGenerationException("Failed to generate valid ID");
