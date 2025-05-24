@@ -1,14 +1,14 @@
 package com.inditex.pricing.application.getprice;
 
-public class GetFinalPriceHandle implements GetPriceUseCase{
+public class GetFinalPriceHandler implements GetPriceUseCase{
 
     private final GetPricePresenter getPricePresenter;
     private final GetPriceValidator getPriceValidator;
     private final GetPriceRepository repository;
 
-    public GetFinalPriceHandle(GetPricePresenter getPricePresenter,
-                               GetPriceValidator getPriceValidator,
-                               GetPriceRepository repository) {
+    public GetFinalPriceHandler(GetPricePresenter getPricePresenter,
+                                GetPriceValidator getPriceValidator,
+                                GetPriceRepository repository) {
         this.getPricePresenter = getPricePresenter;
         this.getPriceValidator = getPriceValidator;
         this.repository = repository;
