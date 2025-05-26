@@ -48,7 +48,7 @@ class GetPriorityPriceFromJpaAdapterTest {
     @Test
     void givenListPrices_whenGet_thenReturnsHighestPriorityPrice() {
 
-        GetPriceQuery query = new GetPriceQuery(1L, 1L, LocalDate.parse("2025-06-10"));
+        GetPriceQuery query = new GetPriceQuery(1L, 1L, LocalDateTime.parse("2025-06-10T00:00:00"));
 
         PriceEntity lowPriority = createTestEntity(1L, new BigDecimal("35.50"), 1);
         PriceEntity middlePriority = createTestEntity(2L, new BigDecimal("68.95"), 2);
@@ -73,7 +73,7 @@ class GetPriorityPriceFromJpaAdapterTest {
     @Test
     void givenSinglePrice_whenGet_thenReturnsPrice() {
 
-        GetPriceQuery query = new GetPriceQuery(1L, 1L, LocalDate.parse("2025-06-10"));
+        GetPriceQuery query = new GetPriceQuery(1L, 1L, LocalDateTime.parse("2025-06-10T00:00:00"));
         PriceEntity singlePrice = createTestEntity(1L, new BigDecimal("35.50"), 1);
 
         when(jpaRepository.findPrices(anyLong(), anyLong(), any()))
@@ -92,7 +92,7 @@ class GetPriorityPriceFromJpaAdapterTest {
 
     @Test
     void givenEmptyList_whenGet_thenReturnsEmpty() {
-        GetPriceQuery query = new GetPriceQuery(1L, 1L, LocalDate.parse("2025-06-10"));
+        GetPriceQuery query = new GetPriceQuery(1L, 1L, LocalDateTime.parse("2025-06-10T00:00:00"));
 
         when(jpaRepository.findPrices(anyLong(), anyLong(), any()))
                 .thenReturn(List.of());
@@ -110,7 +110,7 @@ class GetPriorityPriceFromJpaAdapterTest {
 
     @Test
     void givenEqualPriorities_whenGet_thenReturnsFirstFound() {
-        GetPriceQuery query = new GetPriceQuery(35455L, 1L, LocalDate.parse("2023-06-14"));
+        GetPriceQuery query = new GetPriceQuery(35455L, 1L, LocalDateTime.parse("2023-06-14T00:00:00"));
 
         PriceEntity firstPrice = createTestEntity(1L, new BigDecimal("35.50"), 1);
         PriceEntity secondPrice = createTestEntity(2L, new BigDecimal("38.95"), 1);

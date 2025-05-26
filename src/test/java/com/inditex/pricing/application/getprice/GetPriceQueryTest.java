@@ -2,7 +2,7 @@ package com.inditex.pricing.application.getprice;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,9 +19,9 @@ class GetPriceQueryTest {
     void givenQueryWithNullParameter_WhenInstanced_thenThrowException() {
         assertAll(
                 () -> assertThrows(NullPointerException.class, () ->
-                        new GetPriceQuery(null, 1L, LocalDate.now())),
+                        new GetPriceQuery(null, 1L, LocalDateTime.now())),
                 () -> assertThrows(NullPointerException.class, () ->
-                        new GetPriceQuery(1L, null, LocalDate.now())),
+                        new GetPriceQuery(1L, null, LocalDateTime.now())),
                 () -> assertThrows(NullPointerException.class, () ->
                         new GetPriceQuery(1L, 1L, null))
         );

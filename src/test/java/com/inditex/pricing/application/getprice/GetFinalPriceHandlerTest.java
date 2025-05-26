@@ -10,12 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class GetFinalPriceHandlerTest {
@@ -31,14 +27,14 @@ class GetFinalPriceHandlerTest {
         presenter = Mockito.mock(GetPricePresenter.class);
         validator = Mockito.mock(GetPriceValidator.class);
         repository = Mockito.mock(GetPriceRepository.class);
-        handler = new GetFinalPriceHandler(presenter, validator, repository);
+        handler = new GetFinalPriceHandler(validator, repository);
     }
 
     private GetPriceQuery createValidQuery() {
         return new GetPriceQuery(
                 1L,
                 35455L,
-                LocalDate.parse("2023-06-14")
+                LocalDateTime.parse("2023-06-14T00:00:00")
         );
     }
 
@@ -64,7 +60,7 @@ class GetFinalPriceHandlerTest {
 
         when(repository.get(query)).thenReturn(Optional.of(expectedPrice));
 
-        handler.execute(query);
+        handler.execute(query, presenter);
 
         verify(validator, times(1)).validate(query);
         verify(repository).get(query);
@@ -78,7 +74,7 @@ class GetFinalPriceHandlerTest {
         GetPriceQuery query = createValidQuery();
         when(repository.get(query)).thenReturn(Optional.empty());
 
-        handler.execute(query);
+        handler.execute(query, presenter);
 
         verify(presenter).presentNotFound(contains("Price not found for"));
         verify(presenter, never()).present(any());
@@ -92,7 +88,7 @@ class GetFinalPriceHandlerTest {
         doThrow(new IllegalArgumentException("Invalid query"))
                 .when(validator).validate(query);
 
-        handler.execute(query);
+        handler.execute(query, presenter);
 
         verify(validator).validate(query);
         verify(repository, never()).get(any());
@@ -106,7 +102,7 @@ class GetFinalPriceHandlerTest {
 
         when(repository.get(query)).thenThrow(new RuntimeException("Database error"));
 
-        handler.execute(query);
+        handler.execute(query, presenter);
 
         verify(presenter).presentSystemError(contains("Failed to get price: Database error"));
         verify(presenter, never()).present(any());
@@ -115,7 +111,7 @@ class GetFinalPriceHandlerTest {
 
     @Test
     void givenNullQuery_whenExecute_thenPresentSystemError() {
-        handler.execute(null);
+        handler.execute(null, presenter);
         verify(presenter).presentSystemError(contains("Failed to get price"));
     }
 }

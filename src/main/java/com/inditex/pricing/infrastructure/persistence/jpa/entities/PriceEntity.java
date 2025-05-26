@@ -1,12 +1,9 @@
 package com.inditex.pricing.infrastructure.persistence.jpa.entities;
 
-import com.inditex.pricing.domain.models.BrandId;
-import com.inditex.pricing.domain.models.Price;
-import com.inditex.pricing.domain.models.PriceList;
-import com.inditex.pricing.domain.models.ProductId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "prices")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class PriceEntity {
 
     @Id
@@ -28,10 +26,10 @@ public class PriceEntity {
     @Column(name = "product_id", nullable = false)
     private Long productId;
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false)
     private BigDecimal amount;
 
-    @Column(nullable = false, length = 3)
+    @Column(name = "curr", nullable = false, length = 3)
     private String currency;
 
     @Column(name = "start_date", nullable = false)

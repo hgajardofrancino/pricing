@@ -25,14 +25,14 @@ public class GetPriorityPriceFromJpaAdapter implements GetPriceRepository {
          * return jpaRepository.findPriorityPrice(
                         query.productId(),
                         query.brandId(),
-                        query.date().atStartOfDay()
+                        query.date()
                 )
                 .map(PriceEntityMapper::toDomain); */
 
         return jpaRepository.findPrices(
                         query.productId(),
                         query.brandId(),
-                        query.date().atStartOfDay()
+                        query.date()
                 )
                 .stream()
                 .max(Comparator.comparingInt(PriceEntity::getPriority))
