@@ -64,7 +64,7 @@ class GetFinalPriceHandlerTest {
 
         verify(validator, times(1)).validate(query);
         verify(repository).get(query);
-        verify(presenter).present(expectedPrice);
+        verify(presenter).presentSuccess(expectedPrice);
         verify(presenter, never()).presentNotFound(anyString());
         verify(presenter, never()).presentSystemError(anyString());
     }
@@ -77,7 +77,7 @@ class GetFinalPriceHandlerTest {
         handler.execute(query, presenter);
 
         verify(presenter).presentNotFound(contains("Price not found for"));
-        verify(presenter, never()).present(any());
+        verify(presenter, never()).presentSuccess(any());
         verify(presenter, never()).presentSystemError(anyString());
     }
 
@@ -105,7 +105,7 @@ class GetFinalPriceHandlerTest {
         handler.execute(query, presenter);
 
         verify(presenter).presentSystemError(contains("Failed to get price: Database error"));
-        verify(presenter, never()).present(any());
+        verify(presenter, never()).presentSuccess(any());
         verify(presenter, never()).presentNotFound(anyString());
     }
 

@@ -1,6 +1,6 @@
 package com.inditex.pricing.application.getprice;
 
-public class GetFinalPriceHandler implements GetPriceUseCase{
+public class GetFinalPriceHandler implements GetPriceUseCase {
 
     private final GetPriceValidator getPriceValidator;
     private final GetPriceRepository repository;
@@ -20,7 +20,7 @@ public class GetFinalPriceHandler implements GetPriceUseCase{
             repository
                     .get(query)
                     .ifPresentOrElse(
-                            getPricePresenter::present,
+                            getPricePresenter::presentSuccess,
                             () -> {
                                 String message = String.format("Price not found for brand_id = %d, product_id = %d, date = %s",
                                         query.brandId(),
